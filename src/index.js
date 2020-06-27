@@ -5,7 +5,6 @@ import { createStore } from 'redux';
 import reducer from './reducers';
 import App from './routes/App';
 
-
 const initialState = {
   "user": {},
   "playing": {},
