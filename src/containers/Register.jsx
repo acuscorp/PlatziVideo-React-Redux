@@ -1,24 +1,62 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../assets/styles/components/Register.scss';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerRequest } from '../actions/index'
 
-const Register = () => (
-  <section className="register">
-    <section className="register__container">
-      <h2>Regístrate</h2>
-      <form className="register__container--form">
-        <input className="input" type="text" placeholder="Nombre" />
-        <input className="input" type="text" placeholder="Correo" />
-        <input className="input" type="password" placeholder="Contraseña" />
-        <button className="button">Registrarme</button>
-      </form>
-      <Link to="/login">
-      Iniciar sesión
+
+const Register = (props) => {
+  const [form, setForm] = useState({
+    name : '',
+    email : '',
+    password : '',
+  })
+  const handleInput  = ( event ) => {
+    setForm({
+      ...form,
+      [event.target.name] : event.target.value, // target.name toma el nombre del elemento que lo llame
+    })                                          // por ejemplo name ='password'
+  }
+  const handleSubmit = ( event ) => {
+    event.preventDefault()
+    console.log(form)
+    registerRequest({form})
+    props.history.push('/')
+  }
+  return (
+    <section className="register">
+      <section className="register__container">
+        <h2>Regístrate</h2>
+        <form className="register__container--form" onSubmit = {handleSubmit}>
+          <input 
+            name='name'
+            className="input" 
+            type="text" placeholder="Nombre"
+            onChange={handleInput} 
+          />
+          <input 
+            name='email'
+            className="input" 
+            type="text" placeholder="Correo"
+            onChange={handleInput}
+          />
+          <input 
+            name = 'password'
+            className="input" 
+            type="password" placeholder="Contraseña" 
+            onChange={handleInput}
+          />
+          <button className="button">Registrarme</button>
+        </form>
+        <Link to="/login">
+          Iniciar sesión
       </Link>
+      </section>
     </section>
-  </section>
+  )
+};
 
-);
-
-
-export default Register;
+const mapDispatchToProps = {
+  registerRequest,
+}
+export default connect(null,mapDispatchToProps)(Register)

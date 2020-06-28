@@ -42,13 +42,16 @@ const Home = ({ mylist, trends, originals }) => {
       <Categories title='Originales de Platzi Video'>
         <Carousel>
           {originals.map((item) => (
-            <CarouselItem key={item.id} {...item} />
+          
+          <CarouselItem key={item.id} {...item} />
           ))}
         </Carousel>
       </Categories>
     </>
   );
 };
+
+// se traen del estado los valores
 const mapStateToProps = (state) => {
   return {
     user: state.user,
